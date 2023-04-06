@@ -41,3 +41,10 @@ public:
         serial << "test" << std::endl;
     }
 };
+
+int main(int argc, char**argv){
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<serial_node>());
+    rclcpp::shutdown();
+    return 0;
+}

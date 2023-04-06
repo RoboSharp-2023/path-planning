@@ -22,6 +22,14 @@ find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
+add_executable(serial_connction src/serial.cpp)
+ament_target_dependencies(serial_connction rclcpp std_msgs)
+target_include_directories(serial_connction PUBLIC /usr/include/libserial)
+target_link_directories(serial_connction PUBLIC /usr/lib)
+target_link_libraries(serial_connction serial)
+
+install(TARGETS serial_connction DESTINATION lib/${PROJECT_NAME})
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
