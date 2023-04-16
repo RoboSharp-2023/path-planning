@@ -93,3 +93,8 @@ void RRT_star::RewriteNearNodes(shared_ptr<node> new_node) {
 		}
 	}
 }
+
+vector<shared_ptr<node>> RRT_star::operator ()() {
+	Plan();
+	return nodes;
+}

@@ -76,6 +76,7 @@ class RRT_star {
 
 public:
 	RRT_star(point_2D _start, point_2D _goal, field_map _map, double _connect_radius, double _step_size, int _max_iterations, double _goal_threshold);
+	std::vector<std::shared_ptr<node>> operator()();
 //impl
 private:
 	double CalcDistance(const point_2D& point1, const point_2D& point2){
