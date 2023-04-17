@@ -1,10 +1,11 @@
-#include "include/RRT_star.hpp"
+#include "../include/RRT_star.hpp"
 
 using namespace std;
 
 RRT_star::RRT_star(point_2D _start, point_2D _goal, field_map _map, double _connect_radius, double _step_size, int _max_iterations, double _goal_threshold)
 					: start(_start), goal(_goal),f_map(_map), connect_radius(_connect_radius), step_size(_step_size), max_iterations(_max_iterations), goal_threshold(_goal_threshold) {
 	auto root = make_shared<node>(start, nullptr, 0.0);
+	nodes.clear();
 	nodes.push_back(root);
 }
 

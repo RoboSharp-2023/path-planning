@@ -17,13 +17,13 @@ struct point_2D {
 	point_2D(double _x, double _y): x(_x), y(_y) {}
 };
 
-point_2D operator + (const point_2D& first, const point_2D second) {
+static inline point_2D operator + (const point_2D& first, const point_2D second) {
 	return point_2D(first.x + second.x, first.y + second.y);
 }
-point_2D operator - (const point_2D& first, const point_2D second) {
+static inline point_2D operator - (const point_2D& first, const point_2D second) {
 	return point_2D(first.x - second.x, first.y - second.y);
 }
-point_2D operator * (const double ratio, point_2D point) {
+static inline point_2D operator * (const double ratio, point_2D point) {
 	return point_2D(point.x * ratio, point.y * ratio);
 }
 
@@ -56,12 +56,13 @@ struct field_map{
 class RRT_star {
 	point_2D start;
 	point_2D goal;
+	field_map f_map;
 	double connect_radius;
 	double step_size;
 	int max_iterations;
 	double goal_threshold;
 	std::vector<std::shared_ptr<node>> nodes;
-	field_map f_map;
+	
 
 	
 
@@ -69,7 +70,7 @@ class RRT_star {
 	void ConnectToNearNode(std::shared_ptr<node> new_node);
 	void RewriteNearNodes(std::shared_ptr<node> new_node);
 	bool isCollision(point_2D nearest_point, point_2D new_point);
-	double CalcDistance(const point_2D& point1, const point_2D& point2); //Done
+//	double CalcDistance(const point_2D& point1, const point_2D& point2); //Done
 	point_2D GenerateRandomPoint();// Done
 	point_2D GenerateNewPoint(point_2D nearest_point, point_2D random_point);// Done
 	std::shared_ptr<node> FindNearestNode(point_2D point); // Done
