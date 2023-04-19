@@ -37,13 +37,16 @@ struct robot_state {
 	robot_state(point_2D _pos, double _angle): position(_pos), angle(_angle) {}
 };
 
-struct node {
+struct node_t {
 	point_2D point;
-	std::shared_ptr<node> parent;
+	std::shared_ptr<node_t> parent;
 	double cost;
-	std::vector<std::shared_ptr<node>> children;
+	std::vector<std::shared_ptr<node_t>> children;
+	bool is_goal = false;
 
-	node(point_2D _point, std::shared_ptr<node> _parent, double _cost) : point(_point), parent(_parent), cost(_cost) {}
+	node_t(point_2D _point, std::shared_ptr<node_t> _parent, double _cost) : point(_point), parent(_parent), cost(_cost), children{} {
+		
+	}
 };
 
 struct field_map{
@@ -61,23 +64,20 @@ class RRT_star {
 	double step_size;
 	int max_iterations;
 	double goal_threshold;
-	std::vector<std::shared_ptr<node>> nodes;
-	
-
-	
+	std::vector<std::shared_ptr<node_t>> nodes;
 
 	void Plan();// Done
-	void ConnectToNearNode(std::shared_ptr<node> new_node);
-	void RewriteNearNodes(std::shared_ptr<node> new_node);
+	void ConnectToNearNode(std::shared_ptr<node_t>& new_node);
+	void RewriteNearNodes(std::shared_ptr<node_t> new_node);
 	bool isCollision(point_2D nearest_point, point_2D new_point);
 //	double CalcDistance(const point_2D& point1, const point_2D& point2); //Done
 	point_2D GenerateRandomPoint();// Done
 	point_2D GenerateNewPoint(point_2D nearest_point, point_2D random_point);// Done
-	std::shared_ptr<node> FindNearestNode(point_2D point); // Done
+	std::shared_ptr<node_t> FindNearestNode(point_2D point); // Done
 
 public:
 	RRT_star(point_2D _start, point_2D _goal, field_map _map, double _connect_radius, double _step_size, int _max_iterations, double _goal_threshold);
-	std::vector<std::shared_ptr<node>> operator()();
+	std::shared_ptr<node_t> operator()();
 //impl
 private:
 	double CalcDistance(const point_2D& point1, const point_2D& point2){
